@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#63aeb0" />
+    <link rel="icon" href="/harborlight.svg" type="image/svg+xml" />
+    <meta name="description" content="Harborlight — a tiny town-building toy." />
+    <title>Harborlight</title>
+  </head>
+  <body>
+    <div id="app">
+      <canvas id="world" aria-label="Build and explore an interactive miniature harbor">
+        Harborlight requires a browser with canvas support.
+      </canvas>
+      <div id="hud" role="region" aria-label="Harborlight controls"></div>
+      <div id="loading" role="status" aria-live="polite" aria-atomic="true">
+        <span class="loading-mark" aria-hidden="true">H</span>
+        <span data-loading-copy>Shaping the shoreline…</span>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

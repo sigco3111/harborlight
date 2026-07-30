@@ -1,0 +1,1197 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#90c0b2" />
+    <title>Phòng đối chiếu · Townscaper × Harborlight</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --sea: #90c0b2;
+        --sea-deep: #285f65;
+        --sea-dark: #173e42;
+        --paper: #f5efdd;
+        --paper-raised: #fcf8e9;
+        --paper-edge: #c9bd98;
+        --paper-shadow: #a39778;
+        --ink: #203b3c;
+        --ink-soft: #526c68;
+        --ink-faint: #758783;
+        --coral: #b96f58;
+        --coral-soft: #edd5c3;
+        --line: rgb(32 59 60 / 18%);
+        --line-strong: rgb(32 59 60 / 34%);
+        --shadow: rgb(23 62 66 / 18%);
+        --target: 2.75rem;
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-5: 1.5rem;
+        --space-6: 2rem;
+        --space-7: 3rem;
+        --radius-small: 0.45rem;
+        --radius-medium: 0.8rem;
+        --radius-large: 1.15rem;
+        --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        --duration-fast: 140ms;
+        --duration-medium: 300ms;
+        --overlay-opacity: 0.5;
+        --frame-scale: 1;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        min-width: 280px;
+        background: var(--sea);
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        min-width: 280px;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        background: var(--sea);
+        color: var(--ink);
+        font-family: "Avenir Next", Avenir, "Trebuchet MS", sans-serif;
+        font-size: 0.95rem;
+        line-height: 1.45;
+        text-rendering: optimizeLegibility;
+      }
+
+      button,
+      input,
+      select {
+        color: inherit;
+        font: inherit;
+      }
+
+      button,
+      select,
+      input[type="range"] {
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      button,
+      select {
+        min-height: var(--target);
+      }
+
+      button {
+        cursor: pointer;
+      }
+
+      button:focus-visible,
+      select:focus-visible,
+      input[type="range"]:focus-visible {
+        outline: 0.18rem solid var(--sea-dark);
+        outline-offset: 0.18rem;
+      }
+
+      [hidden] {
+        display: none !important;
+      }
+
+      .lab {
+        width: min(100%, 1920px);
+        min-height: 100dvh;
+        margin: 0 auto;
+        padding: clamp(1rem, 2.1vw, 2.25rem) clamp(1rem, 3.8vw, 4.5rem) 1rem;
+      }
+
+      .lab-header {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: var(--space-6);
+        padding-bottom: var(--space-5);
+        border-bottom: 0.08rem solid var(--line-strong);
+      }
+
+      .eyebrow {
+        margin: 0 0 var(--space-2);
+        color: var(--sea-dark);
+        font-size: 0.66rem;
+        font-weight: 800;
+        letter-spacing: 0.13em;
+        line-height: 1.2;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      p {
+        margin-top: 0;
+      }
+
+      h1,
+      h2 {
+        font-family: Georgia, "Times New Roman", serif;
+        font-weight: 700;
+      }
+
+      h1 {
+        max-width: 40rem;
+        margin-bottom: var(--space-2);
+        color: var(--sea-dark);
+        font-size: clamp(2.05rem, 3.4vw, 3.35rem);
+        letter-spacing: -0.04em;
+        line-height: 0.98;
+      }
+
+      .intro {
+        max-width: 38rem;
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: clamp(0.84rem, 1.2vw, 1rem);
+      }
+
+      .header-tools {
+        display: grid;
+        flex: 0 0 auto;
+        justify-items: end;
+        gap: var(--space-3);
+      }
+
+      .mode-label,
+      .control-label {
+        color: var(--ink-soft);
+        font-size: 0.67rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .mode-switch {
+        display: inline-flex;
+        padding: 0.2rem;
+        border: 0.08rem solid var(--sea-dark);
+        border-radius: var(--radius-medium);
+        background: var(--paper);
+      }
+
+      .mode-switch button {
+        min-width: 7.2rem;
+        min-height: 2.5rem;
+        padding: 0.45rem 0.8rem;
+        border: 0;
+        border-radius: calc(var(--radius-medium) - 0.2rem);
+        background: transparent;
+        color: var(--sea-dark);
+        font-size: 0.75rem;
+        font-weight: 800;
+        letter-spacing: 0.03em;
+        transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
+      }
+
+      .mode-switch button:hover {
+        background: var(--coral-soft);
+      }
+
+      .mode-switch button[aria-pressed="true"] {
+        background: var(--sea-dark);
+        color: var(--paper-raised);
+      }
+
+      .mode-note {
+        margin: 0;
+        color: var(--ink-faint);
+        font-size: 0.7rem;
+      }
+
+      .control-strip {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 4.2rem;
+        gap: var(--space-4);
+        padding: var(--space-3) 0;
+        border-bottom: 0.08rem solid var(--line);
+      }
+
+      .overlay-tools {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: var(--space-4) var(--space-5);
+      }
+
+      .range-control {
+        display: grid;
+        grid-template-columns: auto minmax(10rem, 16rem) auto;
+        align-items: center;
+        gap: var(--space-3);
+      }
+
+      .range-control output {
+        min-width: 2.8rem;
+        color: var(--sea-dark);
+        font-variant-numeric: tabular-nums;
+        font-weight: 800;
+        text-align: right;
+      }
+
+      input[type="range"] {
+        width: min(16rem, 36vw);
+        accent-color: var(--coral);
+        cursor: ew-resize;
+      }
+
+      .input-control {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      select {
+        min-height: 2.4rem;
+        padding: 0.3rem 2rem 0.3rem 0.65rem;
+        border: 0.08rem solid var(--line-strong);
+        border-radius: var(--radius-small);
+        background: var(--paper-raised);
+        color: var(--ink);
+        font-size: 0.78rem;
+        font-weight: 700;
+      }
+
+      select:disabled {
+        cursor: not-allowed;
+        opacity: 0.56;
+      }
+
+      .scale-summary {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--space-3);
+        color: var(--ink-soft);
+        font-size: 0.72rem;
+        font-variant-numeric: tabular-nums;
+        text-align: right;
+        white-space: nowrap;
+      }
+
+      .stage {
+        margin-top: var(--space-5);
+      }
+
+      .viewport-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+        gap: clamp(0.75rem, 1.6vw, 1.5rem);
+      }
+
+      .game-panel {
+        min-width: 0;
+      }
+
+      .game-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 4.25rem;
+        padding: 0.7rem 0.8rem 0.7rem 1rem;
+        border: 0.08rem solid var(--line-strong);
+        border-bottom: 0;
+        border-radius: var(--radius-medium) var(--radius-medium) 0 0;
+        background: var(--paper);
+        box-shadow: 0 0.22rem 0 var(--paper-shadow);
+        gap: var(--space-3);
+      }
+
+      .game-identity,
+      .game-actions,
+      .status-badge,
+      .dimension-line,
+      .footer-main,
+      .footer-detail {
+        display: flex;
+        align-items: center;
+      }
+
+      .game-identity {
+        min-width: 0;
+        gap: var(--space-3);
+      }
+
+      .game-mark {
+        display: grid;
+        width: 2.2rem;
+        height: 2.2rem;
+        flex: 0 0 auto;
+        place-items: center;
+        border: 0.1rem solid currentColor;
+        border-radius: 0.5rem;
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .game-panel[data-game="townscaper"] .game-mark {
+        background: var(--coral-soft);
+        color: var(--coral);
+      }
+
+      .game-panel[data-game="harborlight"] .game-mark {
+        background: var(--sea);
+        color: var(--sea-dark);
+      }
+
+      .game-copy {
+        min-width: 0;
+      }
+
+      .game-copy h2 {
+        margin: 0;
+        color: var(--sea-dark);
+        font-size: clamp(1.05rem, 1.8vw, 1.55rem);
+        letter-spacing: -0.02em;
+        line-height: 1;
+      }
+
+      .game-copy p {
+        margin: 0.28rem 0 0;
+        overflow: hidden;
+        color: var(--ink-faint);
+        font-size: 0.68rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .game-actions {
+        flex: 0 0 auto;
+        gap: 0.65rem;
+      }
+
+      .status-badge {
+        min-height: 2rem;
+        padding: 0.3rem 0.58rem;
+        border: 0.08rem solid currentColor;
+        border-radius: 999rem;
+        gap: 0.38rem;
+        color: var(--ink-soft);
+        font-size: 0.68rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+
+      .status-badge::before {
+        width: 0.48rem;
+        height: 0.48rem;
+        border-radius: 50%;
+        background: currentColor;
+        content: "";
+      }
+
+      .status-badge[data-status="loading"] {
+        color: #9a6b37;
+      }
+
+      .status-badge[data-status="online"] {
+        color: #287566;
+      }
+
+      .status-badge[data-status="offline"] {
+        color: var(--coral);
+      }
+
+      .reload-button {
+        display: grid;
+        width: 2.65rem;
+        height: 2.65rem;
+        min-height: 2.65rem;
+        padding: 0;
+        place-items: center;
+        border: 0.08rem solid var(--line-strong);
+        border-radius: 50%;
+        background: var(--paper-raised);
+        color: var(--sea-dark);
+        font-size: 1.18rem;
+        line-height: 1;
+        transition: background var(--duration-fast) ease, color var(--duration-fast) ease, transform var(--duration-fast) var(--ease-out);
+      }
+
+      .reload-button:hover,
+      .reload-button:focus-visible {
+        background: var(--sea-dark);
+        color: var(--paper-raised);
+        transform: rotate(-20deg);
+      }
+
+      .reload-button:active {
+        transform: translateY(0.1rem) rotate(-20deg);
+      }
+
+      .viewport-host {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1440 / 900;
+        overflow: hidden;
+        border: 0.08rem solid var(--line-strong);
+        border-radius: 0 0 var(--radius-medium) var(--radius-medium);
+        background: var(--sea-dark);
+        box-shadow: 0 0.5rem 1.1rem var(--shadow);
+        contain: layout paint;
+      }
+
+      .frame-stage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1440px;
+        height: 900px;
+        transform: scale(var(--frame-scale));
+        transform-origin: top left;
+      }
+
+      .frame-stage iframe {
+        display: block;
+        width: 1440px;
+        height: 900px;
+        border: 0;
+        background: var(--sea);
+      }
+
+      .frame-caption {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 2.2rem;
+        padding: 0.45rem 0.7rem;
+        color: var(--ink-soft);
+        font-size: 0.65rem;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+      }
+
+      .dimension-line {
+        gap: 0.55rem;
+      }
+
+      .dimension-line::before {
+        width: 0.42rem;
+        height: 0.42rem;
+        border: 0.08rem solid currentColor;
+        content: "";
+      }
+
+      .viewport-grid[data-mode="overlay"] {
+        position: relative;
+        display: block;
+        width: 100%;
+        aspect-ratio: 1440 / 900;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+
+
+      .viewport-grid[data-mode="overlay"] .game-bar {
+        position: absolute;
+        top: 0.8rem;
+        z-index: 5;
+        width: auto;
+        min-height: 3.5rem;
+        border: 0.08rem solid var(--line-strong);
+        border-radius: var(--radius-medium);
+        box-shadow: 0 0.25rem 0.7rem var(--shadow);
+        pointer-events: auto;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel[data-game="townscaper"] .game-bar {
+        left: 0.8rem;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel[data-game="harborlight"] .game-bar {
+        right: 0.8rem;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-copy p {
+        display: none;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-mark {
+        width: 1.8rem;
+        height: 1.8rem;
+        font-size: 1rem;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-copy h2 {
+        font-size: 1rem;
+      }
+
+      .viewport-grid[data-mode="overlay"] .viewport-host {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        border-radius: var(--radius-medium);
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel[data-game="townscaper"] .viewport-host {
+        z-index: 1;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel[data-game="harborlight"] .viewport-host {
+        z-index: 2;
+      }
+
+      .viewport-grid[data-mode="overlay"] .frame-caption {
+        display: none;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel[data-game="harborlight"] .frame-stage {
+        opacity: var(--overlay-opacity);
+      }
+      
+      .viewport-grid[data-mode="overlay"] .frame-stage iframe {
+        pointer-events: none;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel.is-input .frame-stage iframe {
+        pointer-events: auto;
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel.is-input .game-bar {
+        border-color: var(--sea-dark);
+      }
+
+      .viewport-grid[data-mode="overlay"] .game-panel.is-input .game-bar::after {
+        margin-left: 0.4rem;
+        color: var(--sea-dark);
+        content: "nhận thao tác";
+        font-size: 0.58rem;
+        font-weight: 800;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .rubric-section {
+        display: grid;
+        grid-template-columns: minmax(12rem, 0.72fr) minmax(0, 2.28fr);
+        align-items: start;
+        gap: clamp(1.5rem, 4vw, 4.5rem);
+        margin-top: clamp(2rem, 4vw, 4rem);
+        padding-top: var(--space-5);
+        border-top: 0.08rem solid var(--line-strong);
+      }
+
+      .rubric-intro h2 {
+        margin-bottom: var(--space-2);
+        color: var(--sea-dark);
+        font-size: clamp(1.55rem, 2.5vw, 2.35rem);
+        letter-spacing: -0.035em;
+        line-height: 1;
+      }
+
+      .rubric-intro p:last-child {
+        max-width: 20rem;
+        margin-bottom: 0;
+        color: var(--ink-soft);
+        font-size: 0.8rem;
+      }
+
+      .rubric-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        border-top: 0.08rem solid var(--line);
+        border-left: 0.08rem solid var(--line);
+      }
+
+      .rubric-card {
+        min-width: 0;
+        padding: var(--space-3);
+        border-right: 0.08rem solid var(--line);
+        border-bottom: 0.08rem solid var(--line);
+        background: rgb(252 248 233 / 30%);
+      }
+
+      .rubric-card:nth-child(even) {
+        background: rgb(245 239 221 / 36%);
+      }
+
+      .rubric-heading {
+        display: flex;
+        align-items: start;
+        gap: var(--space-2);
+        min-height: 2.5rem;
+      }
+
+      .rubric-index {
+        color: var(--coral);
+        font-size: 0.61rem;
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        line-height: 1.4;
+      }
+
+      .rubric-card strong {
+        color: var(--sea-dark);
+        font-family: Georgia, "Times New Roman", serif;
+        font-size: 0.96rem;
+        line-height: 1.08;
+      }
+
+      .rubric-card p {
+        min-height: 3.1rem;
+        margin: var(--space-2) 0 var(--space-3);
+        color: var(--ink-soft);
+        font-size: 0.72rem;
+        line-height: 1.35;
+      }
+
+      .score-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-2);
+      }
+
+      .score-label {
+        color: var(--ink-faint);
+        font-size: 0.62rem;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+      }
+
+      .score-buttons {
+        display: inline-flex;
+        gap: 0.2rem;
+      }
+
+      .score-buttons button {
+        width: 1.8rem;
+        min-width: 1.8rem;
+        height: 1.8rem;
+        min-height: 1.8rem;
+        padding: 0;
+        border: 0.08rem solid var(--line-strong);
+        border-radius: 0.3rem;
+        background: var(--paper-raised);
+        color: var(--ink-soft);
+        font-size: 0.68rem;
+        font-weight: 900;
+        transition: background var(--duration-fast) ease, color var(--duration-fast) ease;
+      }
+
+      .score-buttons button:hover {
+        border-color: var(--coral);
+        color: var(--coral);
+      }
+
+      .score-buttons button[aria-pressed="true"] {
+        border-color: var(--coral);
+        background: var(--coral);
+        color: var(--paper-raised);
+      }
+
+      .status-footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: var(--space-3);
+        margin-top: clamp(2rem, 4vw, 4rem);
+        padding: 0.8rem 0 0.2rem;
+        border-top: 0.08rem solid var(--line-strong);
+        color: var(--ink-faint);
+        font-size: 0.66rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .footer-main,
+      .footer-detail {
+        gap: 0.55rem;
+      }
+
+      .footer-main strong {
+        color: var(--sea-dark);
+        font-size: 0.68rem;
+      }
+
+      .footer-dot {
+        width: 0.52rem;
+        height: 0.52rem;
+        border-radius: 50%;
+        background: var(--coral);
+      }
+
+      .footer-dot.is-ready {
+        background: #287566;
+      }
+
+      .footer-detail {
+        font-variant-numeric: tabular-nums;
+      }
+
+      @media (max-width: 1120px) {
+        .rubric-section {
+          grid-template-columns: minmax(10rem, 0.6fr) minmax(0, 2fr);
+          gap: var(--space-5);
+        }
+
+        .rubric-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 860px) {
+        .lab-header,
+        .control-strip {
+          align-items: start;
+          flex-direction: column;
+        }
+
+        .header-tools {
+          justify-items: start;
+        }
+
+        .scale-summary {
+          justify-content: flex-start;
+          text-align: left;
+        }
+
+        .viewport-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .rubric-section {
+          grid-template-columns: 1fr;
+        }
+
+        .rubric-intro p:last-child {
+          max-width: 32rem;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .lab {
+          padding-right: 0.75rem;
+          padding-left: 0.75rem;
+        }
+
+        h1 {
+          font-size: 2.35rem;
+        }
+
+        .range-control {
+          grid-template-columns: auto minmax(8rem, 1fr) auto;
+          width: 100%;
+        }
+
+        input[type="range"] {
+          width: 100%;
+        }
+
+        .overlay-tools {
+          width: 100%;
+          align-items: stretch;
+          flex-direction: column;
+          gap: var(--space-3);
+        }
+
+        .input-control {
+          justify-content: space-between;
+        }
+
+        .input-control select {
+          flex: 1;
+          max-width: 14rem;
+        }
+
+        .game-bar {
+          min-height: 3.9rem;
+          padding-left: 0.7rem;
+        }
+
+        .game-actions {
+          gap: 0.35rem;
+        }
+
+        .status-badge {
+          padding-right: 0.45rem;
+          padding-left: 0.45rem;
+          font-size: 0.61rem;
+        }
+
+        .reload-button {
+          width: 2.45rem;
+          height: 2.45rem;
+          min-height: 2.45rem;
+        }
+
+        .rubric-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .rubric-card p {
+          min-height: auto;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="lab" id="lab">
+      <header class="lab-header">
+        <div>
+          <p class="eyebrow">AAA / Townscaper × Harborlight</p>
+          <h1>Phòng đối chiếu</h1>
+          <p class="intro">
+            Hai cảnh chạy cạnh nhau trong cùng một khung chuẩn. Soi hình khối, nhịp điệu và những chi tiết nhỏ trước khi chấm.
+          </p>
+        </div>
+        <div class="header-tools">
+          <span class="mode-label">Chế độ xem</span>
+          <div class="mode-switch" role="group" aria-label="Chọn chế độ xem">
+            <button type="button" data-mode="side-by-side" aria-pressed="true">Song song</button>
+            <button type="button" data-mode="overlay" aria-pressed="false">Phủ lớp</button>
+          </div>
+          <p class="mode-note" id="modeNote">Hai cảnh cùng nhận thao tác.</p>
+        </div>
+      </header>
+
+      <section class="control-strip" aria-label="Điều khiển phủ lớp">
+        <div class="overlay-tools" id="overlayTools" hidden>
+          <label class="range-control" for="opacityRange">
+            <span class="control-label">Mức phủ Harborlight</span>
+            <input id="opacityRange" type="range" min="0" max="100" step="1" value="50" />
+            <output id="opacityValue" for="opacityRange">50%</output>
+          </label>
+          <label class="input-control" for="activeInput">
+            <span class="control-label">Nhận thao tác</span>
+            <select id="activeInput">
+              <option value="harborlight">Harborlight · lớp trên</option>
+              <option value="townscaper">Townscaper · lớp dưới</option>
+            </select>
+          </label>
+        </div>
+        <div class="scale-summary" aria-live="polite">
+          <span>Khung nội bộ cố định</span>
+          <strong id="scaleReadout">1440 × 900 · đang tính tỉ lệ</strong>
+        </div>
+      </section>
+
+      <section class="stage" aria-label="Hai runtime để đối chiếu">
+        <div class="viewport-grid" id="viewportGrid" data-mode="side-by-side">
+          <article class="game-panel" data-game="townscaper">
+            <header class="game-bar">
+              <div class="game-identity">
+                <span class="game-mark" aria-hidden="true">T</span>
+                <div class="game-copy">
+                  <h2>Townscaper</h2>
+                  <p>Official local runtime</p>
+                </div>
+              </div>
+              <div class="game-actions">
+                <span class="status-badge" data-status="loading" data-status-badge="townscaper">
+                  <span data-status-copy>Đang tải</span>
+                </span>
+                <button class="reload-button" type="button" data-reload="townscaper" aria-label="Tải lại Townscaper">↻</button>
+              </div>
+            </header>
+            <div class="viewport-host" data-viewport="townscaper">
+              <div class="frame-stage">
+                <iframe
+                  title="Townscaper local runtime"
+                  data-frame="townscaper"
+                  width="1440"
+                  height="900"
+                  src="http://127.0.0.1:4181/runtime/#GSB0RARueC6Snc9E0lO5B"
+                  loading="eager"
+                  allow="autoplay; fullscreen"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+              </div>
+            </div>
+            <div class="frame-caption">
+              <span class="dimension-line">Viewport 1440 × 900</span>
+              <span data-scale-label>tỉ lệ —</span>
+            </div>
+          </article>
+
+          <article class="game-panel" data-game="harborlight">
+            <header class="game-bar">
+              <div class="game-identity">
+                <span class="game-mark" aria-hidden="true">H</span>
+                <div class="game-copy">
+                  <h2>Harborlight</h2>
+                  <p>Local clean-room build</p>
+                </div>
+              </div>
+              <div class="game-actions">
+                <span class="status-badge" data-status="loading" data-status-badge="harborlight">
+                  <span data-status-copy>Đang tải</span>
+                </span>
+                <button class="reload-button" type="button" data-reload="harborlight" aria-label="Tải lại Harborlight">↻</button>
+              </div>
+            </header>
+            <div class="viewport-host" data-viewport="harborlight">
+              <div class="frame-stage">
+                <iframe
+                  title="Harborlight local runtime"
+                  data-frame="harborlight"
+                  width="1440"
+                  height="900"
+                  src="http://127.0.0.1:4173/#SEwCAAIHCAEDCggIAQEC"
+                  loading="eager"
+                  allow="autoplay; fullscreen"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+              </div>
+            </div>
+            <div class="frame-caption">
+              <span class="dimension-line">Viewport 1440 × 900</span>
+              <span data-scale-label>tỉ lệ —</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="rubric-section" aria-labelledby="rubricTitle">
+        <div class="rubric-intro">
+          <p class="eyebrow">Rubric / 0—2</p>
+          <h2 id="rubricTitle">Điểm kiểm tra</h2>
+          <p>0 = thiếu, 1 = có nhưng lệch, 2 = thuyết phục. Chấm nhanh theo từng dấu hiệu quan sát được.</p>
+        </div>
+        <div class="rubric-grid" id="rubricGrid">
+          <article class="rubric-card" data-rubric="water">
+            <div class="rubric-heading"><span class="rubric-index">01</span><strong>Mặt nước</strong></div>
+            <p>Độ đọc của bờ, mặt phẳng và cảm giác nước bao quanh khu phố.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm mặt nước"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="grid">
+            <div class="rubric-heading"><span class="rubric-index">02</span><strong>Grid gần vuông</strong></div>
+            <p>Ô xây dựng và block giữ được nhịp gần vuông, dễ đọc từ xa.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm grid gần vuông"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="tone">
+            <div class="rubric-heading"><span class="rubric-index">03</span><strong>Biến thể sắc độ</strong></div>
+            <p>Các mảng sáng, bóng và màu tường tạo đủ chiều sâu thị giác.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm biến thể sắc độ"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="fence">
+            <div class="rubric-heading"><span class="rubric-index">04</span><strong>Hàng rào / móng</strong></div>
+            <p>Viền bảo vệ, chân công trình và nền đỡ có trọng lượng đúng.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm hàng rào và móng"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="birds">
+            <div class="rubric-heading"><span class="rubric-index">05</span><strong>Chim & âm thanh</strong></div>
+            <p>Chim đậu, chim bay và lớp âm thanh cùng làm cảnh sống lên.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm chim và âm thanh"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="steel">
+            <div class="rubric-heading"><span class="rubric-index">06</span><strong>Khung thép theo span</strong></div>
+            <p>Nhịp dài có kích hoạt khung thép và giữ đúng logic vượt nhịp.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm khung thép theo span"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="silhouette">
+            <div class="rubric-heading"><span class="rubric-index">07</span><strong>Silhouette</strong></div>
+            <p>Đường chân trời, mái và các khối nổi bật giữ được bản sắc.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm silhouette"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+          <article class="rubric-card" data-rubric="artifacts">
+            <div class="rubric-heading"><span class="rubric-index">08</span><strong>Không lỗi hình</strong></div>
+            <p>Không có z-fighting, xuyên khối, nhấp nháy hay vật thể rơi sai.</p>
+            <div class="score-row"><span class="score-label">Điểm</span><div class="score-buttons" role="group" aria-label="Chấm lỗi hình"><button type="button" data-score="0" aria-pressed="false">0</button><button type="button" data-score="1" aria-pressed="false">1</button><button type="button" data-score="2" aria-pressed="false">2</button></div></div>
+          </article>
+        </div>
+      </section>
+
+      <footer class="status-footer" aria-live="polite">
+        <div class="footer-main">
+          <span class="footer-dot" id="footerDot" aria-hidden="true"></span>
+          <strong id="footerState">LOCAL LAB / ĐANG KHỞI ĐỘNG</strong>
+          <span id="footerMessage">Đang chờ hai runtime phản hồi</span>
+        </div>
+        <div class="footer-detail">
+          <span id="rubricTotal">0 / 16 điểm</span>
+          <span aria-hidden="true">·</span>
+          <span>khung chuẩn 1440 × 900</span>
+        </div>
+      </footer>
+    </main>
+
+    <script>
+      (() => {
+        const FRAME_WIDTH = 1440;
+        const FRAME_HEIGHT = 900;
+        const LOAD_TIMEOUT = 12000;
+        const frameKeys = ["townscaper", "harborlight"];
+        const frameState = {
+          townscaper: { status: "loading", timer: 0, iframe: null },
+          harborlight: { status: "loading", timer: 0, iframe: null },
+        };
+        const grid = document.querySelector("#viewportGrid");
+        const scaleReadout = document.querySelector("#scaleReadout");
+        const modeNote = document.querySelector("#modeNote");
+        const overlayTools = document.querySelector("#overlayTools");
+        const opacityRange = document.querySelector("#opacityRange");
+        const opacityValue = document.querySelector("#opacityValue");
+        const activeInput = document.querySelector("#activeInput");
+        const footerDot = document.querySelector("#footerDot");
+        const footerState = document.querySelector("#footerState");
+        const footerMessage = document.querySelector("#footerMessage");
+        const rubricTotal = document.querySelector("#rubricTotal");
+        const scores = {};
+        let currentMode = "side-by-side";
+
+        const setStatus = (key, status) => {
+          const state = frameState[key];
+          if (!state) return;
+          state.status = status;
+          const badge = document.querySelector(`[data-status-badge="${key}"]`);
+          if (!badge) return;
+          badge.dataset.status = status;
+          const copy = badge.querySelector("[data-status-copy]");
+          if (copy) copy.textContent = status === "online" ? "Trực tuyến" : status === "offline" ? "Không phản hồi" : "Đang tải";
+          updateFooter();
+        };
+
+        const armLoadTimeout = (key) => {
+          const state = frameState[key];
+          window.clearTimeout(state.timer);
+          state.timer = window.setTimeout(() => {
+            if (state.status === "loading") setStatus(key, "offline");
+          }, LOAD_TIMEOUT);
+        };
+
+        const bindFrame = (key, iframe) => {
+          const state = frameState[key];
+          state.iframe = iframe;
+          iframe.addEventListener("load", () => {
+            window.clearTimeout(state.timer);
+            setStatus(key, "online");
+          });
+          iframe.addEventListener("error", () => {
+            window.clearTimeout(state.timer);
+            setStatus(key, "offline");
+          });
+          setStatus(key, "loading");
+          armLoadTimeout(key);
+        };
+
+        const reloadFrame = (key) => {
+          const state = frameState[key];
+          const current = state.iframe;
+          if (!current) return;
+          const replacement = current.cloneNode(true);
+          current.replaceWith(replacement);
+          bindFrame(key, replacement);
+        };
+
+        const updatePointerMode = () => {
+          frameKeys.forEach((key) => {
+            const panel = document.querySelector(`[data-game="${key}"]`);
+            if (panel) panel.classList.toggle("is-input", currentMode === "overlay" && activeInput.value === key);
+          });
+          grid.dataset.activeInput = activeInput.value;
+          activeInput.disabled = currentMode !== "overlay";
+        };
+
+        const resizeFrames = () => {
+          const hosts = [...document.querySelectorAll("[data-viewport]")];
+          const scales = hosts
+            .map((host) => Math.min(host.clientWidth / FRAME_WIDTH, host.clientHeight / FRAME_HEIGHT))
+            .filter((scale) => Number.isFinite(scale) && scale > 0);
+          const scale = scales.length ? Math.min(...scales) : 1;
+          grid.style.setProperty("--frame-scale", String(scale));
+          scaleReadout.textContent = `1440 × 900 · ${scale.toFixed(2)}×`;
+          document.querySelectorAll("[data-scale-label]").forEach((label) => {
+            label.textContent = `tỉ lệ ${scale.toFixed(2)}×`;
+          });
+          footerMessage.textContent = `${currentMode === "overlay" ? "Phủ lớp đang hoạt động" : "Hai cảnh cùng nhận thao tác"} · tỉ lệ ${scale.toFixed(2)}×`;
+        };
+
+        const updateFooter = () => {
+          const onlineCount = frameKeys.filter((key) => frameState[key].status === "online").length;
+          footerDot.classList.toggle("is-ready", onlineCount === frameKeys.length);
+          if (onlineCount === frameKeys.length) {
+            footerState.textContent = "LOCAL LAB / SẴN SÀNG";
+            return;
+          }
+          footerState.textContent = `LOCAL LAB / ${onlineCount} / 2 CẢNH TRỰC TUYẾN`;
+        };
+
+        const setMode = (mode) => {
+          currentMode = mode;
+          grid.dataset.mode = mode;
+          overlayTools.hidden = mode !== "overlay";
+          modeNote.textContent = mode === "overlay" ? "Chỉ layer được chọn nhận thao tác." : "Hai cảnh cùng nhận thao tác.";
+          document.querySelectorAll("[data-mode]").forEach((button) => {
+            if (button instanceof HTMLButtonElement) button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
+          });
+          updatePointerMode();
+          resizeFrames();
+        };
+
+        document.querySelectorAll("[data-mode]").forEach((button) => {
+          button.addEventListener("click", () => setMode(button.dataset.mode));
+        });
+
+        document.querySelectorAll("[data-reload]").forEach((button) => {
+          button.addEventListener("click", () => reloadFrame(button.dataset.reload));
+        });
+
+        opacityRange.addEventListener("input", () => {
+          const value = Number(opacityRange.value);
+          document.documentElement.style.setProperty("--overlay-opacity", String(value / 100));
+          opacityValue.textContent = `${value}%`;
+        });
+
+        activeInput.addEventListener("change", updatePointerMode);
+
+        document.querySelectorAll("[data-rubric]").forEach((card) => {
+          const key = card.dataset.rubric;
+          scores[key] = 0;
+          card.querySelectorAll("[data-score]").forEach((button) => {
+            button.addEventListener("click", () => {
+              const score = Number(button.dataset.score);
+              scores[key] = score;
+              card.querySelectorAll("[data-score]").forEach((option) => {
+                option.setAttribute("aria-pressed", String(option === button));
+              });
+              const total = Object.values(scores).reduce((sum, value) => sum + value, 0);
+              rubricTotal.textContent = `${total} / 16 điểm`;
+            });
+          });
+        });
+
+        frameKeys.forEach((key) => {
+          const iframe = document.querySelector(`[data-frame="${key}"]`);
+          if (iframe) bindFrame(key, iframe);
+        });
+        updatePointerMode();
+        resizeFrames();
+        window.addEventListener("resize", resizeFrames, { passive: true });
+        if ("ResizeObserver" in window) {
+          new ResizeObserver(resizeFrames).observe(grid);
+        }
+      })();
+    </script>
+  </body>
+</html>
