@@ -1,0 +1,6 @@
+# Files we never want to push to the gh-pages branch.
+# This branch hosts only the production build of Harborlight (Three.js + Vite),
+# so anything outside `dist/` would be noise at best and broken assets at worst.
+.DS_Store
+*.log
+node_modules/
