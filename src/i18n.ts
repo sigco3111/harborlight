@@ -1,9 +1,9 @@
-export type Locale = "en" | "vi";
+export type Locale = "en" | "vi" | "ko";
 
 export const LANGUAGE_STORAGE_KEY = "harborlight-language";
 
 export interface HarborMessages {
-  readonly languageCode: "ENG" | "VIE";
+  readonly languageCode: "ENG" | "VIE" | "KOR";
   readonly languageName: string;
   readonly switchLanguage: string;
   readonly metaDescription: string;
@@ -293,13 +293,120 @@ const VIETNAMESE: HarborMessages = {
   ],
 };
 
+const KOREAN: HarborMessages = {
+  languageCode: "KOR",
+  languageName: "한국어",
+  switchLanguage: "한국어로 전환",
+  metaDescription: "Harborlight — 미니어처 항구 마을을 짓는 작은 토이 게임입니다.",
+  canvasLabel: "상호작용하는 미니어처 항구를 짓고 둘러보기",
+  canvasFallback: "Harborlight는 캔버스를 지원하는 브라우저가 필요합니다.",
+  hudLabel: "Harborlight 조작 패널",
+  loading: "해안선을 만드는 중…",
+  fatalTitle: "항구를 열 수 없습니다.",
+  webglError: "WebGL을 시작할 수 없습니다.",
+  brandTagline: "해안선을 빚어보세요",
+  paletteLabel: "페인트 색상",
+  paintLabel: "페인트",
+  paintWith: (color) => `${color}로 칠하기`,
+  defaultHint: {
+    touch: "탭하여 짓기 · 길게 눌러 지우기 · 드래그하여 회전 · 핀치하여 줌인",
+    desktop: "클릭하여 짓기 · 우클릭하여 지우기 · 드래그하여 회전 · 스크롤하여 줌인",
+  },
+  menu: {
+    open: "설정 열기",
+    close: "설정 닫기",
+    region: "마을 설정",
+    title: "항구 도구",
+    actionGroup: "기록 및 마을 동작",
+    undo: "실행 취소",
+    redo: "다시 실행",
+    random: "무작위",
+    save: "저장",
+    grid: "건물 격자",
+    gridShow: "건물 격자 표시",
+    gridHide: "건물 격자 숨기기",
+    sound: "소리",
+    soundOn: "소리 켜기",
+    soundOff: "소리 끄기",
+    help: "플레이 방법",
+    helpShow: "도움말 열기",
+    helpHide: "도움말 닫기",
+    language: "언어",
+    clear: "마을 비우기",
+    clearValue: "초기화",
+    on: "켜짐",
+    off: "꺼짐",
+    guideValue: "안내",
+  },
+  help: {
+    close: "도움말 닫기",
+    kicker: "Harborlight",
+    title: "해안선을 빚어보세요",
+    touchItems: [
+      ["짓기", "물 위, 기초, 옥상, 건물의 옆면을 탭하세요."],
+      ["지우기", "이미 지어진 칸을 길게 누르세요."],
+      ["둘러보기", "한 손가락으로 드래그하세요."],
+      ["가까이", "두 손가락으로 핀치하세요."],
+    ],
+    desktopItems: [
+      ["짓기", "물 위, 기초, 옥상, 건물의 옆면을 클릭하세요."],
+      ["지우기", "지어진 칸을 우클릭하세요."],
+      ["둘러보기", "마을을 드래그해 회전하세요."],
+      ["가까이", "스크롤하여 줌인·줌아웃하세요."],
+    ],
+    shortcutsTouch: "왼쪽에서 색을 고르고, 설정 다이얼에서 기록·격자·소리를 조절하세요.",
+    shortcutsDesktop: "단축키: 1–9 색 선택 · Ctrl/⌘ Z 실행 취소 · Shift Ctrl/⌘ Z 다시 실행",
+    saveNote: "마을은 이 기기에 자동으로 저장됩니다.",
+    dismiss: "건설 시작",
+  },
+  status: {
+    paintSelected: (color) => `${color} 색 선택됨`,
+    nothingToRemove: "여기엔 지울 것이 없습니다",
+    towerLimit: "이 탑은 최대 높이에 도달했습니다",
+    buildingRemoved: "건물을 지웠습니다",
+    foundationPlaced: "새 기초를 놓았습니다",
+    storeyAdded: "층을 추가했습니다",
+    undone: "마지막 변경을 되돌렸습니다",
+    restored: "변경을 복원했습니다",
+    townCleared: "마을이 비어 있습니다",
+    randomTown: "새 항구가 등장했습니다",
+    postcardReady: "엽서 준비 완료",
+    soundOn: "소리 켜짐",
+    soundOff: "소리 꺼짐",
+    gridOn: "건물 격자 켜짐",
+    gridOff: "건물 격자 꺼짐",
+    sharedHarborLoaded: "공유된 항구를 불러왔습니다",
+    savedHarborRestored: "이 기기에 저장된 항구를 복원했습니다",
+    languageChanged: "언어: 한국어",
+  },
+  colors: [
+    "양귀비",
+    "귤",
+    "버터",
+    "레몬그라스",
+    "세이지",
+    "비취",
+    "라군",
+    "하늘",
+    "페리윙클",
+    "히스",
+    "로즈",
+    "테라코타",
+    "셸",
+    "라임스톤",
+    "초크",
+    "항구 블루",
+  ],
+};
+
 const MESSAGES: Readonly<Record<Locale, HarborMessages>> = {
   en: ENGLISH,
   vi: VIETNAMESE,
+  ko: KOREAN,
 };
 
 export function isLocale(value: string | null | undefined): value is Locale {
-  return value === "en" || value === "vi";
+  return value === "en" || value === "vi" || value === "ko";
 }
 
 export function getMessages(locale: Locale): HarborMessages {
@@ -313,7 +420,9 @@ export function getInitialLocale(): Locale {
   } catch {
     // Continue with the browser language when storage is unavailable.
   }
-  return navigator.language.toLowerCase().startsWith("vi") ? "vi" : "en";
+  const navigatorLanguage = typeof navigator !== "undefined" ? navigator.language.toLowerCase() : "";
+  if (navigatorLanguage.startsWith("ko")) return "ko";
+  return navigatorLanguage.startsWith("vi") ? "vi" : "en";
 }
 
 export function storeLocale(locale: Locale): void {

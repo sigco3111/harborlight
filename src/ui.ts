@@ -534,7 +534,9 @@ export function createHud(root: HTMLElement, callbacks: HarborHudCallbacks): Har
   languageButton.addEventListener(
     "click",
     () => {
-      const nextLocale: Locale = locale === "en" ? "vi" : "en";
+      const order: Locale[] = ["en", "vi", "ko"];
+      const currentIndex = order.indexOf(locale);
+      const nextLocale: Locale = order[(currentIndex + 1) % order.length] ?? "en";
       storeLocale(nextLocale);
       setMenuOpen(false);
       renderLocale(nextLocale);
