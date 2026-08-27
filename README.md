@@ -7,6 +7,8 @@ Harborlight는 물 위에 집을 짓고, 다리를 놓고, 색을 골라 직접 
 
 🌐 **라이브 데모**: <https://sigco3111.github.io/harborlight/>
 
+![Harborlight 한국어판 — 미니어처 항구 마을을 손으로 짓는 토이 게임의 메인 화면. 좌측엔 16색 페인트 팔레트, 우상단엔 ⚙ 설정 다이얼, 화면 중앙엔 다양한 색의 집들과 다리, 분수, 호수가 보인다.](./docs/screenshots/harborlight-preview.png)
+
 ---
 
 ## ✨ 주요 특징
@@ -173,6 +175,9 @@ harborlight/
 │   └── _redirects                # Netlify / Pages 규칙
 ├── comparison/                   # Townscaper × Harborlight 비교 페이지
 │   └── index.html
+├── docs/
+│   └── screenshots/
+│       └── harborlight-preview.png   # README 메인 스크린샷
 ├── src/
 │   ├── main.ts                   # 부트스트랩 + 이벤트 루프
 │   ├── i18n.ts                   # ★ 다국어 메시지 + Locale 타입
